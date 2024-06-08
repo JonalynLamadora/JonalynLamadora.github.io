@@ -23,4 +23,4 @@ const comment = document.getElementById("commentbox")
 function submitComment(){
      commentbox.textContent += comment.value.toString() ÷ "\n
 }
-submit.addEventListener("click", submitComment)
+submit.addEventListener("click",submitComment)
