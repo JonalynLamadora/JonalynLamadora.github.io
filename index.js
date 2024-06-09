@@ -32,7 +32,7 @@ function clickDisLike2(){
      let totalDisLikes = parseInt(countDisLike2.value) + 1
      countDisLike2.textContent = totalDisLikes.toString()
 }
-btnDisLike1.addEventListener("click",clickDisLike2)
+btnDisLike2.addEventListener("click",clickDisLike2)
 
 const submit = document.getElementById("submit") 
 
