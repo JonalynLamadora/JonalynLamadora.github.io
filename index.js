@@ -1,49 +1,56 @@
-const btnLike1 = document.getElementById("btnLike1")
-const countLike1 = document.getElementById("countLike1")
+document.addEventListener('DOMContentLoaded', (event) => {
+    const prices = {
+        price1: 10000.00,
+        price2: 5000.00,
+        price3: 27000.00,
+        price4: 37000.00,
+        price5: 80000.00,
+        price6: 90000.00,
+        price7: 100000.00
+    }; 
 
-function clickLike1(){
-  let totalLikes = parseInt(countLike1.value) + 1
-  countLike1.textContent = totalLikes.toString()
-}  
-btnLike1.addEventListener("click",clickLike1)
+    const qtyInputs = [
+        document.getElementById('qty1'),
+        document.getElementById('qty2'),
+        document.getElementById('qty3'),
+        document.getElementById('qty4'),
+        document.getElementById('qty5'),
+        document.getElementById('qty6'),
+        document.getElementById('qty7')
+    ]; 
 
-const btnLike2 = document.getElementById("btnLike2")
-const countLike2 = document.getElementById("countLike2")
+    const totalInput = document.getElementById('total');
+    const cashInput = document.getElementById('cash');
+    const changeInput = document.getElementById('change');
+    const cartsTextarea = document.getElementById('carts'); 
 
-function clickLike2(){
-  let totalLikes = parseInt(countLike2.value) + 1
-  countLike2.textContent = totalLikes.toString()
-}  
-btnLike2.addEventListener("click",clickLike2)
+    function updateCart() {
+        let total = 0;
+        let cartText = ''; 
 
-const btnDisLike1 = document.getElementById("btnDisLike1")
-const countDisLike1 = document.getElementById("countDisLike1")
+        qtyInputs.forEach((input, index) => {
+            const qty = parseInt(input.value) || 0;
+            const priceKey = `price${index + 1}`;
+            const productPrice = prices[priceKey];
+            if (qty > 0) {
+                total += qty * productPrice;
+                cartText += `Product ${index + 1} - Quantity: ${qty}, Price: ${(qty * productPrice).toFixed(2)}\n`;
+            }
+        }); 
 
-function clickDisLike1(){
-  let totalDisLikes = parseInt(countDisLike1.value) + 1
-  countDisLike1.textContent = totalDisLikes.toString()
-}  
-btnDisLike1.addEventListener("click",clickDisLike1)
+        totalInput.value = total.toFixed(2);
+        cartsTextarea.value = cartText.trim();
+    } 
 
-const btnDisLike2 = document.getElementById("btnDisLike2")
-const countDisLike2 = document.getElementById("countDisLike2")
+    function calculateChange() {
+        const total = parseFloat(totalInput.value) || 0;
+        const cash = parseFloat(cashInput.value) || 0;
+        const change = cash - total;
+        changeInput.value = change.toFixed(2);
+    } 
 
-function clickDisLike2(){
-  let totalDisLikes = parseInt(countDisLike2.value) + 1
-  countDisLike2.textContent = totalDisLikes.toString()
-}  
-btnDisLike2.addEventListener("click",clickDisLike2)
-
-const submit = document.getElementById("submit")
-
-const comment = document.getElementById("comment")
-
-const commentbox = document.getElementById("commentbox")
-
-function submitComment(){
-
-commentbox.textContent += comment.value.toString() + "\n"
-comment.value=""
-}
-
-submit.addEventListener("click", submitComment)
+    qtyInputs.forEach(input => {
+        input.addEventListener('input', updateCart);
+    });
+    cashInput.addEventListener('input', calculateChange);
+});
